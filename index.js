@@ -26,12 +26,15 @@ bot.on("voice", (msg) => {
     };
     try {
       axios(axiosConfig).then((response) => {
-          const command = response.data.result;
+        const command = response.data.result;
+        bot.sendMessage(msg.chat.id, "💬");
+        setTimeout(() => {
           bot.sendMessage(msg.chat.id, command);
+        },4000)
       });
         setTimeout(() => {
-          bot.sendMessage(msg.chat.id, "🔥🔥🔥");
-        },2000)
+          bot.sendMessage(msg.chat.id, "🔥");
+        },7000)
     } catch (error) {
       console.log("ошибка распознования речи", error);
     }
