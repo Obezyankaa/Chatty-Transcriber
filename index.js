@@ -115,3 +115,71 @@ bot.on("message", (msg) => {
     );
   }
 });
+
+// шутка с чаком норисом 
+bot.onText(/\/joke/, (msg) => {
+  axios
+    .get("https://api.chucknorris.io/jokes/random")
+    .then((response) => {
+      const joke = response.data.value;
+      const chatId = msg.chat.id;
+      const options = {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "Случайная шутка",
+                callback_data: "new_joke",
+              },
+            ],
+          ],
+        },
+      };
+      bot.sendMessage(chatId, joke, options);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+bot.on("callback_query", (query) => {
+  if (query.data === "new_joke") {
+    axios
+      .get("https://api.chucknorris.io/jokes/random")
+      .then((response) => {
+        const joke = response.data.value;
+        const chatId = query.message.chat.id;
+        bot.editMessageText(joke, {
+          chat_id: chatId,
+          message_id: query.message.message_id,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});
+
+// мемы с котиком 
+
+const arrKey = [
+  100, 101, 102, 103, 200, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303,
+  304, 305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410,
+  411, 412, 413, 414, 415, 416, 417, 418, 420, 421, 422, 423, 424, 425, 426,
+  429, 431, 444, 450, 451, 497, 498, 499, 500, 501, 502, 503, 504, 506, 507,
+  508, 509, 510, 511, 521, 522, 523, 525, 599,
+];
+
+bot.onText(/\/cat/, (msg) => {
+  const status = arrKey[Math.floor(Math.random() * arrKey.length)];
+  const imageUrl = `https://http.cat/${status}`;
+  axios
+    .get(imageUrl, { responseType: "arraybuffer" })
+    .then((response) => {
+      const chatId = msg.chat.id;
+      bot.sendPhoto(chatId, response.data, { caption: `HTTP ${status}` });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
