@@ -10,28 +10,35 @@ const token = `${apiKey}`;
 
 const bot = new TelegramBot(token, { polling: true });
 
+// эта команда, работает в случае, если наш бот попадает в группу или канал
+// bot.onText(/\/stop/, (msg) => {
+//   if (bot.isPolling()) {
+//     bot.sendMessage(msg.chat.id, "Пока бро, бот остановлен!");
+//     bot.sendMessage(msg.chat.id, "👋🏼");
+//     // bot.clearCommands();
+//     bot.removeAllCommands();
+//     bot.stopPolling();
+//   }
+// });
 
-// стартовая команда для бота 
 bot.onText(/\/stop/, (msg) => {
-  if (bot.isPolling()) {
-    bot.sendMessage(msg.chat.id, "Пока бро, бот остановлен!");
-    bot.sendMessage(msg.chat.id, "👋🏼");
-    bot.stopPolling();
-  }
+  bot.sendMessage(msg.chat.id, "Пока бро, бот остановлен!");
+  bot.sendMessage(msg.chat.id, "👋🏼");
+  bot.stopPolling();
 });
 
-// остановить бота 
+
+// стартовая команда для бота
 bot.onText(/\/start/, (msg) => {
   if (!bot.isPolling()) {
-     bot.sendMessage(
-       msg.chat.id,
-       "Наконец-то ты меня включил! погнали покажу чё могу 🏃💨"
-     );
+    bot.sendMessage(
+      msg.chat.id,
+      "Привет! Меня зовут Аркадий, я многофункциональный бот, погнали покажу чё могу 🏃💨"
+    );
     bot.startPolling();
   }
-  console.log('start');
+  console.log("start");
 });
-
 
 bot.onText(/\/conversion/, (msg) => {
   // это действие переводит все голосовые сообщения в текст!
@@ -89,11 +96,14 @@ bot.onText(/\/conversion/, (msg) => {
           bot.sendMessage(msg.chat.id, randomValue);
         }, 7000);
       } catch (error) {
-          bot.sendMessage(msg.chat.id, "Я вас не понимаю, повторите внятно всой текст!");
+        bot.sendMessage(
+          msg.chat.id,
+          "Я вас не понимаю, повторите внятно всой текст!"
+        );
       }
     });
   });
-    console.log("converter");
+  console.log("converter");
 });
 
 // эта команда срабатывает в случае если мы просто что-то ввели в бота
