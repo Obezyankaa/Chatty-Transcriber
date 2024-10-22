@@ -1,0 +1,5 @@
+{
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredDarkColorTheme": "Material Theme Darker High Contrast",
+  "workbench.preferredHighContrastColorTheme": "Material Theme Lighter"
+}
