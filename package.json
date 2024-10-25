@@ -5,13 +5,13 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5",
-    "grammy": "^1.30.0"
+    "grammy": "^1.30.0",
+    "i18next": "^23.16.2"
   },
   "name": "chatty-transcriber",
   "version": "1.0.0",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx tsc && node bot.js"
   },
   "keywords": [],
